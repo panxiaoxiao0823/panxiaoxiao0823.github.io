@@ -2,20 +2,43 @@ module.exports = {
     title: '阿伮',
     description: '使用VuePress写的个人博客，仅供学习使用',
     head: [
-        ['link', { rel: 'icon', href: '/img/logo.ico' }]
+        ['link', {
+            rel: 'icon',
+            href: '/img/logo.ico'
+        }]
     ],
+    rules: [{
+            test: /\.less$/,
+            loader: "less-loader", // compiles Less to CSS
+        },
+        {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        },
+    ],
+    chainWebpack: (config, isServer) => {
+        config.module
+            .rule("htm")
+            .test(/\.htm$/)
+            .use("html-loader")
+            .loader("html-loader");
+    },
     themeConfig: {
         lastUpdated: 'Last Updated',
         displayAllHeaders: true, // 默认值：false
         activeHeaderLinks: true,
         logo: '/img/index.jpeg',
-        nav: [
-            { text: '首页', link: '/' },
-            { text: '查看源码', link: 'https://github.com/panxiaoxiao0823/blog-VuePress' },
+        nav: [{
+                text: '首页',
+                link: '/'
+            },
+            {
+                text: '查看源码',
+                link: 'https://github.com/panxiaoxiao0823/blog-VuePress'
+            },
         ],
         sidebar: {
-            '/blog/': [
-                {
+            '/blog/': [{
                     title: "简介",
                     collapsable: false,
                     children: [
@@ -54,6 +77,13 @@ module.exports = {
                     children: [
                         'vue-typescript-admin/'
                     ]
+                },
+                {
+                    title: "面试",
+                    collapsable: true,
+                    children: [
+                        'interview/'
+                    ]
                 }
                 // {
                 //     title: "healthlife",
@@ -65,6 +95,9 @@ module.exports = {
             ]
         }
     },
-    plugins: [['@vuepress/active-header-links'], ['go-top']]
+    plugins: [
+        ['@vuepress/active-header-links'],
+        ['go-top']
+    ]
 
 }
